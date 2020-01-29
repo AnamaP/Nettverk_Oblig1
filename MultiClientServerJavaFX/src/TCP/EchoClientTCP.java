@@ -30,6 +30,8 @@ public class EchoClientTCP
 
         System.out.println("Hi, I am EchoUCase TCP client!");
 
+
+
         try
         (
             // create TCP socket for the given hostName, remote port PortNumber
@@ -38,10 +40,12 @@ public class EchoClientTCP
             // Stream writer to the socket
             PrintWriter out =
                     new PrintWriter(clientSocket.getOutputStream(), true);
+
             // Stream reader from the socket
             BufferedReader in =
                     new BufferedReader(
                             new InputStreamReader(clientSocket.getInputStream()));
+
             // Keyboard input reader
             BufferedReader stdIn =
                     new BufferedReader(
@@ -49,6 +53,7 @@ public class EchoClientTCP
         )
         {
             String userInput;
+
             // Loop until null input string
             System.out.print("I (Client) [" + InetAddress.getLocalHost()  + ":" + clientSocket.getLocalPort() + "] > ");
             while ((userInput = stdIn.readLine()) != null && !userInput.isEmpty())
@@ -60,7 +65,8 @@ public class EchoClientTCP
                 String receivedText = in.readLine();
 
                 System.out.println("Server [" + hostName +  ":" + portNumber + "] > " + receivedText);
-                System.out.print("I (Client) [" + clientSocket.getLocalAddress().getHostAddress() + ":" + clientSocket.getLocalPort() + "] > ");
+                System.out.print("I (Client) [" + clientSocket.getLocalAddress().getHostAddress() + ":" +
+                        clientSocket.getLocalPort() + "] > ");
             }
         } catch (UnknownHostException e)
         {

@@ -3,6 +3,7 @@ package TCP; /**
  * DATA410 Networking and Cloud Computing, Spring 2020
  * Raju Shrestha, OsloMet
  **/
+
 import java.net.*;
 import java.io.*;
 
@@ -38,6 +39,7 @@ public class EchoUcaseServerTCP
                 // Stream writer to the connection socket
                 PrintWriter out =
                         new PrintWriter(connectSocket.getOutputStream(), true);
+
                 // Stream reader from the connection socket
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(connectSocket.getInputStream()));
@@ -45,17 +47,35 @@ public class EchoUcaseServerTCP
         {
             InetAddress clientAddr = connectSocket.getInetAddress();
             int clientPort = connectSocket.getPort();
+
             String receivedText;
+
+
 
             // read from the connection socket
             while ((receivedText = in.readLine())!=null)
             {
+                URL url = new URL("http://" + receivedText);
+
                 System.out.println("Client [" + clientAddr.getHostAddress() +  ":" + clientPort +"] > " + receivedText);
 
-                String outText = receivedText.toUpperCase();
-                // Write the converted uppercase string to the connection socket
-                out.println(outText);
-                System.out.println("I (Server) [" + connectSocket.getLocalAddress().getHostAddress() + ":" + portNumber + "] > " + outText);
+                InputStream in1 = url.openStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in1));
+
+                String outText = reader.readLine();
+
+                if(outText.contains("Velkommen")) {
+
+                    // Write the converted uppercase string to the connection socket
+                    out.println(outText);
+
+                    System.out.println("I (Server) [" + connectSocket.getLocalAddress().getHostAddress() + ":" +
+                            portNumber + "] > " + outText);
+                    System.out.println("fant Velkommen");
+                }
+                else {
+                    System.out.println("fant ikke ordet");
+                }
             }
 
             System.out.println("I am done, Bye!");
