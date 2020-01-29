@@ -20,6 +20,37 @@
      - Code 2: print ‘!!!Server couldn’t find the web page!!!
 */
 
-public class ClientSocket {
-    //test
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+public class ClientSocketTCP {
+    public static void main(String[] args) throws IOException {
+
+        String hostName = "127.0.0.1";
+        int portNumber = 5555;
+
+        if(args.length > 0){
+            hostName = args[0];
+
+            if(args.length > 1){
+                portNumber = Integer.parseInt(args[1]);
+
+                if(args.length > 2){
+                    System.err.println("Feilmelding");
+                    System.exit(1);
+                }
+            }
+        }
+
+        try {
+            Socket clientSocketTCP = new Socket(hostName, portNumber);
+
+        }
+        catch (UnknownHostException e){
+
+        }
+
+    }
 }

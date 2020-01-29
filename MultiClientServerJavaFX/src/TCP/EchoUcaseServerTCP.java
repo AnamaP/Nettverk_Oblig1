@@ -46,6 +46,7 @@ public class EchoUcaseServerTCP
             InetAddress clientAddr = connectSocket.getInetAddress();
             int clientPort = connectSocket.getPort();
             String receivedText;
+
             // read from the connection socket
             while ((receivedText = in.readLine())!=null)
             {
