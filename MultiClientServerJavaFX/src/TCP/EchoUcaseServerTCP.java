@@ -59,14 +59,20 @@ public class EchoUcaseServerTCP
 
                 System.out.println("Client [" + clientAddr.getHostAddress() +  ":" + clientPort +"] > " + receivedText);
 
+                // input stream som kommer fra URL, henter ut all informasjon fra siden i html format.
                 InputStream in1 = url.openStream();
+
+                //Leser innholdet fra input stream
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in1));
 
+                // leser hver linje
                 String outText = reader.readLine();
+                String text;
 
+                // en test for å sjekke om den finner ordet velkommen - fungerer, men var bare en test
                 if(outText.contains("Velkommen")) {
 
-                    // Write the converted uppercase string to the connection socket
+                    // printer ut innholdet fra siden
                     out.println(outText);
 
                     System.out.println("I (Server) [" + connectSocket.getLocalAddress().getHostAddress() + ":" +
