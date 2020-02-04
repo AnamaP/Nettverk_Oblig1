@@ -1,4 +1,4 @@
-package TCP; /**
+package Nettverk; /**
  * Socket programming example: TCP Client
  * DATA2410 Networking and Cloud Computing, Spring 2020
  * Raju Shrestha, OsloMet
@@ -6,7 +6,7 @@ package TCP; /**
 import java.io.*;
 import java.net.*;
 
-public class EchoClientTCP
+public class ClientTCP
 {
     public static void main(String[] args) throws IOException
     {

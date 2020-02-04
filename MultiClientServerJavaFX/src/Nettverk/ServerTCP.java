@@ -1,4 +1,4 @@
-package TCP; /**
+package Nettverk; /**
  * Socket programming example: TCP Server
  * DATA410 Networking and Cloud Computing, Spring 2020
  * Raju Shrestha, OsloMet
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class EchoUcaseServerTCP
+public class ServerTCP
 {
     public static void main(String[] args) throws IOException
     {
@@ -77,27 +77,41 @@ public class EchoUcaseServerTCP
                 InputStream stream=urlcon.getInputStream();
                 int i;
 
+                String pageContent = "";
+
+                //Legger alle tegn på nettsiden inn i en String
                 while((i=stream.read())!=-1){
-                    List<String> containedEmails = new ArrayList<>();
-
-                    Pattern regex = Pattern.compile("((http?|ftp|gopher|telnet|file):((//)|(\\\\))+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)",
-                            //"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
-                                                Pattern.CASE_INSENSITIVE);
-
-                    out.println(outText);
-
-                    Matcher emailMatcher = regex.matcher(outText);
-                    while(emailMatcher.find()){
-                        containedEmails.add(outText.substring(emailMatcher.start(0),emailMatcher.end(0)));
+                    try {
+                        pageContent += (char)i;
                     }
-                    for(String email : containedEmails){
-                        System.out.println("Emails:" + email);
+                    catch(Exception e){
+                        System.out.println("DET SKJEDDE NOE FEIL");
                     }
-
-                    //System.out.println(containedEmails);
-
-                    System.out.print((char)i);
                 }
+                //leter etter emails som matcher regex'n under, i Stringen som blir lagd over
+                List<String> containedEmails = new ArrayList<>();
+
+                Pattern regex = Pattern.compile(
+                        "([A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6})",
+                        Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+
+                Matcher emailMatcher = regex.matcher(pageContent);
+
+                //Legger emails inn i en liste, dersom de ikke er der fra før
+                while(emailMatcher.find()){
+                    String enEmail = pageContent.substring(emailMatcher.start(0),emailMatcher.end(0));
+                        if(!containedEmails.contains(enEmail)){
+                            containedEmails.add(enEmail);
+                        }
+                    }
+
+                //skriver emails til client
+                out.println(containedEmails.toString());
+
+
+                // stringnavn += email + "\n"
+                //out.println(outText);
+
 
 
                 // en test for å sjekke om den finner ordet velkommen - fungerer, men var bare en test
