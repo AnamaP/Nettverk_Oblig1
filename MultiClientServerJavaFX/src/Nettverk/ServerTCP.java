@@ -1,8 +1,4 @@
-package Nettverk; /**
- * Socket programming example: TCP Server
- * DATA410 Networking and Cloud Computing, Spring 2020
- * Raju Shrestha, OsloMet
- **/
+package Nettverk;
 
 import java.net.*;
 import java.io.*;
@@ -63,14 +59,6 @@ public class ServerTCP
 
                 System.out.println("Client [" + clientAddr.getHostAddress() +  ":" + clientPort +"] > " + receivedText);
 
-                // input stream som kommer fra URL, henter ut all informasjon fra siden i html format.
-                InputStream in1 = url.openStream();
-
-                //Leser innholdet fra input stream
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in1));
-
-                // leser hver linje
-                String outText = reader.readLine();
 
                 URLConnection urlcon=url.openConnection();
                 InputStream stream=urlcon.getInputStream();

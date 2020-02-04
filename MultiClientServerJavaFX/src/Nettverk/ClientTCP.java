@@ -1,8 +1,5 @@
-package Nettverk; /**
- * Socket programming example: TCP Client
- * DATA2410 Networking and Cloud Computing, Spring 2020
- * Raju Shrestha, OsloMet
- **/
+package Nettverk;
+
 import java.io.*;
 import java.net.*;
 
