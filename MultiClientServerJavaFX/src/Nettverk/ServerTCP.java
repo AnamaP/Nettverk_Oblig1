@@ -60,7 +60,6 @@ public class ServerTCP
             while ((receivedText = in.readLine())!=null)
             {
                 URL url = new URL("https://" + receivedText);
-                System.out.println(url);
 
                 System.out.println("Client [" + clientAddr.getHostAddress() +  ":" + clientPort +"] > " + receivedText);
 
@@ -129,7 +128,7 @@ public class ServerTCP
                 System.out.println("File: "+url.getFile());
 
                 System.out.println("I (Server) [" + connectSocket.getLocalAddress().getHostAddress() + ":" +
-                            portNumber + "] > " + outText);
+                            portNumber + "] > " + containedEmails.toString());
 
 
 
