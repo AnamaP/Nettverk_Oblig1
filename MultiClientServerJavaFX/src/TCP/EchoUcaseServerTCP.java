@@ -6,6 +6,10 @@ package TCP; /**
 
 import java.net.*;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EchoUcaseServerTCP
 {
@@ -55,7 +59,8 @@ public class EchoUcaseServerTCP
             // read from the connection socket
             while ((receivedText = in.readLine())!=null)
             {
-                URL url = new URL("http://" + receivedText);
+                URL url = new URL("https://" + receivedText);
+                System.out.println(url);
 
                 System.out.println("Client [" + clientAddr.getHostAddress() +  ":" + clientPort +"] > " + receivedText);
 
@@ -67,21 +72,54 @@ public class EchoUcaseServerTCP
 
                 // leser hver linje
                 String outText = reader.readLine();
-                String text;
 
-                // en test for å sjekke om den finner ordet velkommen - fungerer, men var bare en test
-                if(outText.contains("Velkommen")) {
+                URLConnection urlcon=url.openConnection();
+                InputStream stream=urlcon.getInputStream();
+                int i;
 
-                    // printer ut innholdet fra siden
+                while((i=stream.read())!=-1){
+                    List<String> containedEmails = new ArrayList<>();
+
+                    Pattern regex = Pattern.compile("((http?|ftp|gopher|telnet|file):((//)|(\\\\))+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)",
+                            //"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
+                                                Pattern.CASE_INSENSITIVE);
+
                     out.println(outText);
 
-                    System.out.println("I (Server) [" + connectSocket.getLocalAddress().getHostAddress() + ":" +
+                    Matcher emailMatcher = regex.matcher(outText);
+                    while(emailMatcher.find()){
+                        containedEmails.add(outText.substring(emailMatcher.start(0),emailMatcher.end(0)));
+                    }
+                    for(String email : containedEmails){
+                        System.out.println("Emails:" + email);
+                    }
+
+                    //System.out.println(containedEmails);
+
+                    System.out.print((char)i);
+                }
+
+
+                // en test for å sjekke om den finner ordet velkommen - fungerer, men var bare en test
+
+                    // printer ut innholdet fra siden
+
+
+
+                System.out.println("Protocol: "+url.getProtocol());
+                System.out.println("Host Name: "+url.getHost());
+                System.out.println("Port Number: "+url.getPort());
+                System.out.println("Default Port Number: "+url.getDefaultPort());
+                System.out.println("Query String: "+url.getQuery());
+                System.out.println("Path: "+url.getPath());
+                System.out.println("File: "+url.getFile());
+
+                System.out.println("I (Server) [" + connectSocket.getLocalAddress().getHostAddress() + ":" +
                             portNumber + "] > " + outText);
-                    System.out.println("fant Velkommen");
-                }
-                else {
-                    System.out.println("fant ikke ordet");
-                }
+
+
+
+
             }
 
             System.out.println("I am done, Bye!");
