@@ -61,6 +61,8 @@ public class ClientTCP
                 // read from the socket and display
                 String receivedText = in.readLine();
 
+
+
                 System.out.println("Server [" + hostName +  ":" + portNumber + "] > " + receivedText);
                 System.out.print("I (Client) [" + clientSocket.getLocalAddress().getHostAddress() + ":" +
                         clientSocket.getLocalPort() + "] > ");

@@ -7,8 +7,26 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ServerTCP
-{
+public class ServerTCP {
+
+    public static String message(String errorCode){
+        String code = "";
+        switch (errorCode) {
+            case "Code 0": {
+                code += "print the emails one per line.";
+                System.out.println(code);
+                break;
+            }
+
+            case "Code 1": {
+                code += "!!No email address found on the page!!!";
+                System.out.println(code);
+                break;
+            }
+        }
+
+        return code;
+    }
     public static void main(String[] args) throws IOException
     {
         int portNumber = 5555; // Default port to use
@@ -76,7 +94,7 @@ public class ServerTCP
                     }
                 }
                 //leter etter emails som matcher regex'n under, i Stringen som blir lagd over
-                List<String> containedEmails = new ArrayList<>();
+                ArrayList<String> containedEmails = new ArrayList<>();
 
                 Pattern regex = Pattern.compile(
                         "([A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6})",
@@ -90,30 +108,35 @@ public class ServerTCP
                         if(!containedEmails.contains(enEmail)){
                             containedEmails.add(enEmail);
                         }
+
                     }
 
-                //skriver emails til client
-                out.println(containedEmails.toString());
+
+                if(containedEmails.isEmpty()){
+                    String code = "Code 1";
+                    out.println(message(code));
+
+                }
+                else{
+                    //skriver emails til client
+                    String code = "Code 0";
+                    out.println(message(code) + containedEmails.toString());
+
+                }
 
 
-                // stringnavn += email + "\n"
-                //out.println(outText);
 
 
 
-                // en test for å sjekke om den finner ordet velkommen - fungerer, men var bare en test
 
-                    // printer ut innholdet fra siden
-
-
-
-                System.out.println("Protocol: "+url.getProtocol());
+                /*System.out.println("Protocol: "+url.getProtocol());
                 System.out.println("Host Name: "+url.getHost());
                 System.out.println("Port Number: "+url.getPort());
                 System.out.println("Default Port Number: "+url.getDefaultPort());
                 System.out.println("Query String: "+url.getQuery());
                 System.out.println("Path: "+url.getPath());
                 System.out.println("File: "+url.getFile());
+                 */
 
                 System.out.println("I (Server) [" + connectSocket.getLocalAddress().getHostAddress() + ":" +
                             portNumber + "] > " + containedEmails.toString());
