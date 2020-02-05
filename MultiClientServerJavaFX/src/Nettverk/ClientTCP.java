@@ -14,7 +14,7 @@ public class ClientTCP {
         String code = "";
         switch (errorCode) {
             case 0: {
-                code += "print the emails one per line.";
+                code += "Print the emails one per line.";
                 break;
             }
 
@@ -90,9 +90,9 @@ public class ClientTCP {
                 String [] split = receivedText.trim().split(",");
                 String test = split[0];
 
-                System.out.println(split[0]);
+                //System.out.println(split[0]);
 
-
+/*
                 switch (receivedText){
                     case "1": {
                         receivedText = message(Integer.parseInt(test));
@@ -110,7 +110,7 @@ public class ClientTCP {
                         break;
                     }
 
-                }
+                }*/
 
 
                 System.out.println("Server [" + hostName +  ":" + portNumber + "] > " + receivedText);

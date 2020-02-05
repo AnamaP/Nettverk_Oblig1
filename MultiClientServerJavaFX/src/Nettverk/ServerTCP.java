@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static Nettverk.ClientTCP.message;
+
 public class ServerTCP {
 
 
@@ -94,12 +96,13 @@ public class ServerTCP {
 
 
                 if(containedEmails.isEmpty()){
-                    out.println(1);
-
+                    //out.println(1);
+                    out.println(message(1));
                 }
                 else{
                     //skriver emails til client
-                    out.println(0+","+containedEmails.toString());
+                    out.println(message(0));
+                    out.println(containedEmails.toString());
                 }
 
 
