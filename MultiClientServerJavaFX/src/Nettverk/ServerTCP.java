@@ -3,30 +3,12 @@ package Nettverk;
 import java.net.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ServerTCP {
 
-    public static String message(String errorCode){
-        String code = "";
-        switch (errorCode) {
-            case "Code 0": {
-                code += "print the emails one per line.";
-                System.out.println(code);
-                break;
-            }
 
-            case "Code 1": {
-                code += "!!No email address found on the page!!!";
-                System.out.println(code);
-                break;
-            }
-        }
-
-        return code;
-    }
     public static void main(String[] args) throws IOException
     {
         int portNumber = 5555; // Default port to use
@@ -67,7 +49,6 @@ public class ServerTCP {
             int clientPort = connectSocket.getPort();
 
             String receivedText;
-
 
 
             // read from the connection socket
@@ -113,15 +94,12 @@ public class ServerTCP {
 
 
                 if(containedEmails.isEmpty()){
-                    String code = "Code 1";
-                    out.println(message(code));
+                    out.println(1);
 
                 }
                 else{
                     //skriver emails til client
-                    String code = "Code 0";
-                    out.println(message(code) + containedEmails.toString());
-
+                    out.println(0+","+containedEmails.toString());
                 }
 
 
