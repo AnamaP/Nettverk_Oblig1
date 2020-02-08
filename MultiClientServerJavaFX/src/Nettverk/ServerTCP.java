@@ -3,10 +3,9 @@ package Nettverk;
 import java.net.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static Nettverk.ClientTCP.message;
+import static Nettverk.HjelpeMetoder.*;
 
 public class ServerTCP {
 
@@ -56,43 +55,15 @@ public class ServerTCP {
             // read from the connection socket
             while ((receivedText = in.readLine())!=null)
             {
-                URL url = new URL("https://" + receivedText);
+
+                //Åpner en kobling mellom server og webside
+                openConnection(urlReciever(receivedText));
 
                 System.out.println("Client [" + clientAddr.getHostAddress() +  ":" + clientPort +"] > " + receivedText);
 
 
-                URLConnection urlcon=url.openConnection();
-                InputStream stream=urlcon.getInputStream();
-                int i;
-
-                String pageContent = "";
-
-                //Legger alle tegn på nettsiden inn i en String
-                while((i=stream.read())!=-1){
-                    try {
-                        pageContent += (char)i;
-                    }
-                    catch(Exception e){
-                        System.out.println("DET SKJEDDE NOE FEIL");
-                    }
-                }
-                //leter etter emails som matcher regex'n under, i Stringen som blir lagd over
-                ArrayList<String> containedEmails = new ArrayList<>();
-
-                Pattern regex = Pattern.compile(
-                        "([A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6})",
-                        Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
-
-                Matcher emailMatcher = regex.matcher(pageContent);
-
-                //Legger emails inn i en liste, dersom de ikke er der fra før
-                while(emailMatcher.find()){
-                    String enEmail = pageContent.substring(emailMatcher.start(0),emailMatcher.end(0));
-                        if(!containedEmails.contains(enEmail)){
-                            containedEmails.add(enEmail);
-                        }
-
-                    }
+                //Oppretter en ArrayListe som tar imot alle emails.
+                ArrayList<String> containedEmails  = emailExtractor(receivedText);
 
 
                 if(containedEmails.isEmpty()){
@@ -101,35 +72,18 @@ public class ServerTCP {
                 }
                 else{
                     //skriver emails til client
-                    out.println(message(0));
-                    out.println(containedEmails.toString());
+                    out.println(message(0)+","+containedEmails.toString());
                 }
-
-
-
-
-
-
-                /*System.out.println("Protocol: "+url.getProtocol());
-                System.out.println("Host Name: "+url.getHost());
-                System.out.println("Port Number: "+url.getPort());
-                System.out.println("Default Port Number: "+url.getDefaultPort());
-                System.out.println("Query String: "+url.getQuery());
-                System.out.println("Path: "+url.getPath());
-                System.out.println("File: "+url.getFile());
-                 */
 
                 System.out.println("I (Server) [" + connectSocket.getLocalAddress().getHostAddress() + ":" +
                             portNumber + "] > " + containedEmails.toString());
 
-
-
-
             }
 
             System.out.println("I am done, Bye!");
-        } catch (IOException e)
-        {
+        }
+
+        catch (IOException e) {
             System.out.println("Exception caught when trying to listen on port "
                     + portNumber + " or listening for a connection");
             System.out.println(e.getMessage());

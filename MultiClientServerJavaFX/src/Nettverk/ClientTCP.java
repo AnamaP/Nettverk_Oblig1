@@ -88,34 +88,23 @@ public class ClientTCP {
                 String receivedText = in.readLine();
 
                 String [] split = receivedText.trim().split(",");
-                String test = split[0];
 
-                //System.out.println(split[0]);
+                String emails = "";
 
-/*
-                switch (receivedText){
-                    case "1": {
-                        receivedText = message(Integer.parseInt(test));
-                        break;
+                for(int i = 0; i < split.length; i ++){
+
+                    if (i == split.length-1){
+                        emails += split[i];
                     }
-                    case "2":{
-                        receivedText = message(Integer.parseInt(test));
-                        break;
+                    else {
+                        emails += split[i] + " \n";
                     }
-                    default: {
-                        receivedText = message(Integer.parseInt(test));
-                        for (int i = 1; i < split.length; i++){
-                            receivedText += split[i];
-                        }
-                        break;
-                    }
+                }
 
-                }*/
-
-
-                System.out.println("Server [" + hostName +  ":" + portNumber + "] > " + receivedText);
+                System.out.println("Server [" + hostName +  ":" + portNumber + "] > " + emails);
                 System.out.print("I (Client) [" + clientSocket.getLocalAddress().getHostAddress() + ":" +
                         clientSocket.getLocalPort() + "] > ");
+
             }
         } catch (UnknownHostException e)
         {
