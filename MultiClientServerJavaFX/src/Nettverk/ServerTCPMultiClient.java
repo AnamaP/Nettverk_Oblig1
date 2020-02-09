@@ -42,6 +42,9 @@ public class ServerTCPMultiClient
                 // create and start a new ClientServer thread for each connected client
                 ClientService clientserver = new ClientService(serverSocket.accept());
                 clientserver.start();
+                System.out.println("New Client connected: " + clientserver.clientAddr.getLocalHost()+ ":" +
+                        clientserver.clientPort + " ");
+
             }
         } catch (IOException e)
         {
@@ -57,7 +60,7 @@ public class ServerTCPMultiClient
     /***
      * This class serves a client in a separate thread
      */
-    static class ClientService extends Thread
+    public static class ClientService extends Thread
     {
         Socket connectSocket;
         InetAddress clientAddr;

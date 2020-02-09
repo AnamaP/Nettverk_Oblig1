@@ -32,8 +32,6 @@ public class ClientTCP {
 
         System.out.println("Hi, I am EchoUCase TCP client!");
 
-
-
         try
         (
             // create TCP socket for the given hostName, remote port PortNumber
@@ -58,8 +56,9 @@ public class ClientTCP {
 
             // Loop until null input string
             System.out.print("I (Client) [" + InetAddress.getLocalHost()  + ":" + clientSocket.getLocalPort() + "] > ");
-            while ((userInput = stdIn.readLine()) != null && !userInput.isEmpty())
-            {
+
+
+            while ((userInput = stdIn.readLine()) != null && !userInput.isEmpty()) {
                 // write keyboard input to the socket
                 out.println(userInput);
 
