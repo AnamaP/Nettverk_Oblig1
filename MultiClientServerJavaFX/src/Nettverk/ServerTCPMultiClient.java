@@ -30,7 +30,7 @@ public class ServerTCPMultiClient
 
         System.out.println("Hi, I am the EchoUCase Multi-client TCP server.");
         InetAddress inetAddress = InetAddress.getLocalHost();
-        System.out.println("Server opened at: "+inetAddress.getHostAddress());
+        System.out.println("Server opened at: "+inetAddress.getHostAddress() + ": " + portNumber);
          try (
                 // Create server socket with the given port number
                 ServerSocket serverSocket =
@@ -118,7 +118,8 @@ public class ServerTCPMultiClient
                 // close the connection socket
                 connectSocket.close();
 
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 System.out.println("Exception occurred when trying to communicate with the client "
                         + clientAddr.getHostAddress());
                 System.out.println(e.getMessage());

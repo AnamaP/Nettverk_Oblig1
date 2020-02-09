@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.*;
 
 
-import static Nettverk.HjelpeMetoder.*;
+import static Nettverk.HjelpeMetoder.emailPrinter;
 
 
 
@@ -13,7 +13,7 @@ public class ClientTCP2 {
     public static void main(String[] args) throws IOException
     {
 
-        String hostName = "127.0.0.1"; // Default host, localhost
+        String hostName = "192.168.1.3"; // Default host, localhost
         int portNumber = 5555; // Default port to use
         if (args.length > 0)
         {
@@ -32,12 +32,12 @@ public class ClientTCP2 {
 
         System.out.println("Hi, I am EchoUCase TCP client!");
 
-
+        InetAddress address = InetAddress.getByName(hostName);
 
         try
                 (
                         // create TCP socket for the given hostName, remote port PortNumber
-                        Socket clientSocket = new Socket(hostName, portNumber);
+                        Socket clientSocket = new Socket(address, portNumber);
 
                         // Stream writer to the socket
                         PrintWriter out =
@@ -58,8 +58,9 @@ public class ClientTCP2 {
 
             // Loop until null input string
             System.out.print("I (Client) [" + InetAddress.getLocalHost()  + ":" + clientSocket.getLocalPort() + "] > ");
-            while ((userInput = stdIn.readLine()) != null && !userInput.isEmpty())
-            {
+
+
+            while ((userInput = stdIn.readLine()) != null && !userInput.isEmpty()) {
                 // write keyboard input to the socket
                 out.println(userInput);
 
