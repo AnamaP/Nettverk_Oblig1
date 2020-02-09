@@ -5,6 +5,11 @@ package Nettverk; /**
  **/
 import java.net.*;
 import java.io.*;
+import java.util.ArrayList;
+
+import static Nettverk.ClientTCP.message;
+import static Nettverk.HjelpeMetoder.*;
+
 
 public class ServerTCPMultiClient
 {
@@ -83,13 +88,27 @@ public class ServerTCPMultiClient
                 // read from the connection socket
                 while (((receivedText = in.readLine()) != null))
                 {
+                    //Åpner en kobling mellom server og webside
+                    openConnection(urlReciever(receivedText));
+
                     System.out.println("Client [" + clientAddr.getHostAddress() +  ":" + clientPort +"] > " + receivedText);
 
                     // Write the converted uppercase string to the connection socket
-                    String outText = ProcessString(receivedText);
+                    ArrayList<String> containedEmails  = emailExtractor(receivedText);
 
-                    out.println(outText);
-                    System.out.println("I (Server) [" + connectSocket.getLocalAddress().getHostAddress() + ":" + serverPort +"] > " + outText);
+
+                    if(containedEmails.isEmpty()){
+                        //out.println(1);
+                        out.println(message(1));
+                    }
+                    else{
+                        //skriver emails til client
+                        out.println(message(0)+","+containedEmails.toString());
+                    }
+
+
+                    System.out.println("I (Server) [" + connectSocket.getLocalAddress().getHostAddress() +
+                            ":" + serverPort +"] > " + containedEmails.toString());
                 }
 
                 // close the connection socket

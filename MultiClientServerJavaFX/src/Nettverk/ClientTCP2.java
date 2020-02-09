@@ -9,45 +9,25 @@ import java.util.Arrays;
 //import static Nettverk.ServerTCP.message;
 
 
-public class ClientTCP {
-    public static String message(int errorCode){
-        String code = "";
-        switch (errorCode) {
-            case 0: {
-                code += "Print the emails one per line.";
-                break;
-            }
+public class ClientTCP2 {
 
-            case 1: {
-                code += "!!No email address found on the page!!!";
-                break;
-            }
-
-            case 2: {
-                code+= "!!Server couldn’t find the web page!!!";
-                break;
-            }
-        }
-
-        return code;
-    }
     public static void main(String[] args) throws IOException
     {
 
-      String hostName = "127.0.0.1"; // Default host, localhost
-      int portNumber = 5555; // Default port to use
-      if (args.length > 0)
+        String hostName = "127.0.0.1"; // Default host, localhost
+        int portNumber = 5555; // Default port to use
+        if (args.length > 0)
         {
-           hostName = args[0];
-           if (args.length > 1)
-           {
-             portNumber = Integer.parseInt(args[1]);
-             if (args.length > 2)
-             {
-               System.err.println("Usage: java TCP.EchoClientTCP [<host name>] [<port number>]");
-               System.exit(1);
-             }
-           }
+            hostName = args[0];
+            if (args.length > 1)
+            {
+                portNumber = Integer.parseInt(args[1]);
+                if (args.length > 2)
+                {
+                    System.err.println("Usage: java TCP.EchoClientTCP [<host name>] [<port number>]");
+                    System.exit(1);
+                }
+            }
         }
 
 
@@ -56,24 +36,24 @@ public class ClientTCP {
 
 
         try
-        (
-            // create TCP socket for the given hostName, remote port PortNumber
-            Socket clientSocket = new Socket(hostName, portNumber);
+                (
+                        // create TCP socket for the given hostName, remote port PortNumber
+                        Socket clientSocket = new Socket(hostName, portNumber);
 
-            // Stream writer to the socket
-            PrintWriter out =
-                    new PrintWriter(clientSocket.getOutputStream(), true);
+                        // Stream writer to the socket
+                        PrintWriter out =
+                                new PrintWriter(clientSocket.getOutputStream(), true);
 
-            // Stream reader from the socket
-            BufferedReader in =
-                    new BufferedReader(
-                            new InputStreamReader(clientSocket.getInputStream()));
+                        // Stream reader from the socket
+                        BufferedReader in =
+                                new BufferedReader(
+                                        new InputStreamReader(clientSocket.getInputStream()));
 
-            // Keyboard input reader
-            BufferedReader stdIn =
-                    new BufferedReader(
-                            new InputStreamReader(System.in))
-        )
+                        // Keyboard input reader
+                        BufferedReader stdIn =
+                                new BufferedReader(
+                                        new InputStreamReader(System.in))
+                )
         {
             String userInput;
 
@@ -87,8 +67,8 @@ public class ClientTCP {
                 // read from the socket and display
                 String receivedText = in.readLine();
 
-
                 String [] split = receivedText.trim().split(",");
+
 
                 String emails = "";
 
