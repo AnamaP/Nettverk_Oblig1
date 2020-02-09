@@ -2,35 +2,14 @@ package Nettverk;
 
 import java.io.*;
 import java.net.*;
-import java.util.Arrays;
 
-//import static Nettverk.ServerTCP.test;
 
-//import static Nettverk.ServerTCP.message;
+import static Nettverk.HjelpeMetoder.emailPrinter;
+
 
 
 public class ClientTCP {
-    public static String message(int errorCode){
-        String code = "";
-        switch (errorCode) {
-            case 0: {
-                code += "Print the emails one per line.";
-                break;
-            }
 
-            case 1: {
-                code += "!!No email address found on the page!!!";
-                break;
-            }
-
-            case 2: {
-                code+= "!!Server couldn’t find the web page!!!";
-                break;
-            }
-        }
-
-        return code;
-    }
     public static void main(String[] args) throws IOException
     {
 
@@ -87,22 +66,9 @@ public class ClientTCP {
                 // read from the socket and display
                 String receivedText = in.readLine();
 
+                String outMessage = emailPrinter(receivedText);
 
-                String [] split = receivedText.trim().split(",");
-
-                String emails = "";
-
-                for(int i = 0; i < split.length; i ++){
-
-                    if (i == split.length-1){
-                        emails += split[i];
-                    }
-                    else {
-                        emails += split[i] + " \n";
-                    }
-                }
-
-                System.out.println("Server [" + hostName +  ":" + portNumber + "] > " + emails);
+                System.out.println("Server [" + hostName +  ":" + portNumber + "] > " + outMessage);
                 System.out.print("I (Client) [" + clientSocket.getLocalAddress().getHostAddress() + ":" +
                         clientSocket.getLocalPort() + "] > ");
 

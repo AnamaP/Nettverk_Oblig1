@@ -7,7 +7,7 @@ import java.net.*;
 import java.io.*;
 import java.util.ArrayList;
 
-import static Nettverk.ClientTCP.message;
+
 import static Nettverk.HjelpeMetoder.*;
 
 
@@ -36,7 +36,6 @@ public class ServerTCPMultiClient
                         new ServerSocket(portNumber);
           )
         {
-            String receivedText;
             // continuously listening for clients
             while (true)
             {
@@ -81,8 +80,7 @@ public class ServerTCPMultiClient
                     // Stream reader from the connection socket
                     BufferedReader in = new BufferedReader(
                             new InputStreamReader(connectSocket.getInputStream()));
-            )
-            {
+            ) {
 
                 String receivedText;
                 // read from the connection socket
@@ -93,17 +91,17 @@ public class ServerTCPMultiClient
 
                     System.out.println("Client [" + clientAddr.getHostAddress() +  ":" + clientPort +"] > " + receivedText);
 
-                    // Write the converted uppercase string to the connection socket
+                    // Oppretter en ArrayListe som tar i mot alle emails og bruker hjelpemetoden for å legge de inn
                     ArrayList<String> containedEmails  = emailExtractor(receivedText);
 
 
                     if(containedEmails.isEmpty()){
-                        //out.println(1);
-                        out.println(message(1));
+                        //Fant ingen emails --> gi beskjed til klienten.
+                        out.println(errorMessage(1));
                     }
                     else{
                         //skriver emails til client
-                        out.println(message(0)+","+containedEmails.toString());
+                        out.println(errorMessage(0)+containedEmails.toString());
                     }
 
 
@@ -114,24 +112,12 @@ public class ServerTCPMultiClient
                 // close the connection socket
                 connectSocket.close();
 
-            } catch (IOException e)
-            {
-                System.out.println("Exception occurred when trying to communicate with the client " + clientAddr.getHostAddress());
+            } catch (IOException e) {
+                System.out.println("Exception occurred when trying to communicate with the client "
+                        + clientAddr.getHostAddress());
                 System.out.println(e.getMessage());
             }
         }
 
-        /***
-         * Process the input string and returns.
-         * @param intext Input text
-         * @return processed text
-         */
-        private String ProcessString(String intext)
-        {
-            // Convert to upper case
-            String outtext = intext.toUpperCase();
-
-            return outtext;
-        }
     }
 }

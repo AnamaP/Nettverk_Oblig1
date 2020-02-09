@@ -2,11 +2,10 @@ package Nettverk;
 
 import java.io.*;
 import java.net.*;
-import java.util.Arrays;
 
-//import static Nettverk.ServerTCP.test;
 
-//import static Nettverk.ServerTCP.message;
+import static Nettverk.HjelpeMetoder.*;
+
 
 
 public class ClientTCP2 {
@@ -67,22 +66,9 @@ public class ClientTCP2 {
                 // read from the socket and display
                 String receivedText = in.readLine();
 
-                String [] split = receivedText.trim().split(",");
+                String outMessage = emailPrinter(receivedText);
 
-
-                String emails = "";
-
-                for(int i = 0; i < split.length; i ++){
-
-                    if (i == split.length-1){
-                        emails += split[i];
-                    }
-                    else {
-                        emails += split[i] + " \n";
-                    }
-                }
-
-                System.out.println("Server [" + hostName +  ":" + portNumber + "] > " + emails);
+                System.out.println("Server [" + hostName +  ":" + portNumber + "] > " + outMessage);
                 System.out.print("I (Client) [" + clientSocket.getLocalAddress().getHostAddress() + ":" +
                         clientSocket.getLocalPort() + "] > ");
 
