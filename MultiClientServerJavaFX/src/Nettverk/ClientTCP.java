@@ -32,10 +32,12 @@ public class ClientTCP {
 
         System.out.println("Hi, I am EchoUCase TCP client!");
 
+      InetAddress address = InetAddress.getByName(hostName);
+
         try
         (
             // create TCP socket for the given hostName, remote port PortNumber
-            Socket clientSocket = new Socket(hostName, portNumber);
+            Socket clientSocket = new Socket(address, portNumber);
 
             // Stream writer to the socket
             PrintWriter out =

@@ -29,11 +29,14 @@ public class ServerTCPMultiClient
         }
 
         System.out.println("Hi, I am the EchoUCase Multi-client TCP server.");
-
+        InetAddress inetAddress = InetAddress.getLocalHost();
+        System.out.println("Server opened at: "+inetAddress.getHostAddress());
          try (
                 // Create server socket with the given port number
                 ServerSocket serverSocket =
                         new ServerSocket(portNumber);
+
+
           )
         {
             // continuously listening for clients
