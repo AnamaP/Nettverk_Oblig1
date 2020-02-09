@@ -5,7 +5,7 @@ import java.net.*;
 
 
 import static Nettverk.HjelpeMetoder.emailPrinter;
-
+import static Nettverk.HjelpeMetoder.errorMessage;
 
 
 public class ClientTCP {
@@ -67,11 +67,19 @@ public class ClientTCP {
                 // read from the socket and display
                 String receivedText = in.readLine();
 
-                String outMessage = emailPrinter(receivedText);
+                if(receivedText != null) {
 
-                System.out.println("Server [" + hostName +  ":" + portNumber + "] > " + outMessage);
-                System.out.print("I (Client) [" + clientSocket.getLocalAddress().getHostAddress() + ":" +
-                        clientSocket.getLocalPort() + "] > ");
+                    String outMessage = emailPrinter(receivedText);
+
+                    System.out.println("Server [" + hostName + ":" + portNumber + "] > " + outMessage);
+                    System.out.print("I (Client) [" + clientSocket.getLocalAddress().getHostAddress() + ":" +
+                            clientSocket.getLocalPort() + "] > ");
+                }
+                else {
+                    System.out.println(errorMessage(2));
+                    System.out.println("Restart your client");
+                    System.exit(1);
+                }
 
             }
         } catch (UnknownHostException e)
