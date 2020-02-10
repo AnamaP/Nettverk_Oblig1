@@ -13,7 +13,7 @@ public class TestClientTCP {
     public static void main(String[] args) throws IOException
     {
 
-        String hostName = "127.0.0.1";
+        String hostName = "10.253.1.66";
         int portNumber = 5555;
         if (args.length > 0)
         {

@@ -52,13 +52,15 @@ public class ClientTCP {
                             new InputStreamReader(System.in))
         )
         {
-            String userInput;
+            String userInput = "";
 
             // Loop until null input string
             System.out.print("I (Client) [" + InetAddress.getLocalHost()  + ":" + clientSocket.getLocalPort() + "] > ");
 
 
             while ((userInput = stdIn.readLine()) != null && !userInput.isEmpty()) {
+
+
                 // write keyboard input to the socket
                 out.println(userInput);
 

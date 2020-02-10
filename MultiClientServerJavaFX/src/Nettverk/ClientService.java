@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 import static Nettverk.HjelpeMetoder.*;
@@ -40,36 +41,48 @@ public class ClientService extends Thread {
 
             String receivedText;
             // leser fra tilkoblings socket
-            while (((receivedText = in.readLine()) != null))
-            {
-                //Åpner en kobling mellom server og webside
-                openConnection(urlReciever(receivedText));
+            boolean connected = true;
 
-                System.out.println("Client [" + clientAddr.getHostAddress() +  ":" + clientPort +"] > " + receivedText);
+            while (connected) {
 
-                // Oppretter en ArrayListe som tar i mot alle emails og bruker hjelpemetoden for å legge de inn
-                ArrayList<String> containedEmails  = emailExtractor(receivedText);
+                try {
+
+                    receivedText = in.readLine();
+                    if(receivedText != null) {
+                        //Åpner en kobling mellom server og webside
+                        openConnection(urlReciever(receivedText));
+
+                        System.out.println("Client [" + clientAddr.getHostAddress() + ":" + clientPort + "] > " + receivedText);
+
+                        // Oppretter en ArrayListe som tar i mot alle emails og bruker hjelpemetoden for å legge de inn
+                        ArrayList<String> containedEmails = emailExtractor(receivedText);
 
 
-                if(containedEmails.isEmpty()){
-                    //Fant ingen emails --> gi beskjed til klienten.
-                    out.println(messageDecoder(1));
+                        if (containedEmails.isEmpty()) {
+                            //Fant ingen emails --> gi beskjed til klienten.
+                            out.println(messageDecoder(1));
+                        } else {
+                            //skriver emails til client
+                            out.println(containedEmails.toString());
+                        }
+
+                        System.out.println("I (Server) [" + connectSocket.getLocalAddress().getHostAddress() +
+                                ":" + serverPort + "] > " + containedEmails.toString());
+                    }
+                    else {
+                        System.out.println("Client with IP:"  +connectSocket.getLocalAddress().getHostAddress()+ " - Disconnected!");
+                        connected = false;
+                    }
                 }
-                else{
-                    //skriver emails til client
-                    out.println(containedEmails.toString());
+                catch (IOException e){
+                    System.out.println("Blalbla");
+                }
+
                 }
 
 
-                System.out.println("I (Server) [" + connectSocket.getLocalAddress().getHostAddress() +
-                        ":" + serverPort +"] > " + containedEmails.toString());
-            }
-
-
-            // lukker leser, skriver og socket forbindelsen
-            in.close();
-            out.close();
-            connectSocket.close();
+                // lukker leser, skriver og socket forbindelsen
+                connectSocket.close();
 
         }
         catch (IOException e) {

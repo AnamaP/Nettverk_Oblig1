@@ -56,13 +56,14 @@ public class ServerTCPMultiClient {
           )
         {
             // Lytter kontinuerlig etter klienter
-            while (true)
-            {
+            while (true) {
+
                 // Oppretter og starter en ny ClientServer tråd for hver tilkoblede klient
                 ClientService clientserver = new ClientService(serverSocket.accept());
                 clientserver.start();
                 System.out.println("New Client connected: " + clientserver.clientAddr.getLocalHost()+ ":" +
                         clientserver.clientPort + " ");
+
 
             }
         } catch (IOException e) {
