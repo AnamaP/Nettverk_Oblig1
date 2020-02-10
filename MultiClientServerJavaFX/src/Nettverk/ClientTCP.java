@@ -28,7 +28,7 @@ public class ClientTCP {
             }
 
 
-        System.out.println("Connected to TCP client!");
+        System.out.println("Connecting TCP client!");
 
       InetAddress address = InetAddress.getByName(hostName);
 

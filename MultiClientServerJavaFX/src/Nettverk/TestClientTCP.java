@@ -30,7 +30,7 @@ public class TestClientTCP {
         }
 
 
-        System.out.println("Connected to test TCP client!");
+        System.out.println("Connecting test TCP client!");
 
         InetAddress address = InetAddress.getByName(hostName);
 

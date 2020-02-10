@@ -1,10 +1,6 @@
 package Nettverk;
 import java.net.*;
 import java.io.*;
-import java.util.ArrayList;
-
-
-import static Nettverk.HjelpeMetoder.*;
 
 
 public class ServerTCPMultiClient
@@ -19,14 +15,15 @@ public class ServerTCPMultiClient
                 portNumber = Integer.parseInt(args[0]);
             else
             {
-                System.err.println("Usage: java ServerMutiClients [<port number>]");
+                System.err.println("Usage: java ServerMultiClients [<port number>]");
                 System.exit(1);
             }
         }
 
-        System.out.println("Connected to Multi-client TCP server.");
-        InetAddress inetAddress = InetAddress.getLocalHost();
+        System.out.println("Connecting Multi-client TCP server.");
+        InetAddress inetAddress = InetAddress.getLocalHost(); // kobler opp til selve nettet så klient og server finner hverandre
         System.out.println("Server opened at: "+inetAddress.getHostAddress() + ": " + portNumber);
+
          try (
                 // Oppretter en server socket med det gitte port nummeret
                 ServerSocket serverSocket =
