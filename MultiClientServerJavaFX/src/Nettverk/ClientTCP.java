@@ -11,7 +11,7 @@ import static Nettverk.HjelpeMetoder.messageDecoder;
 public class ClientTCP {
 
     public static void main(String[] args) throws IOException {
-        String hostName = "127.0.0.1";
+        String hostName = "10.253.31.239";
         int portNumber = 5555;
           if (args.length > 0)
             {

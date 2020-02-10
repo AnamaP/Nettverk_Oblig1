@@ -69,7 +69,13 @@ public class ClientService extends Thread {
 
                         System.out.println("I (Server) [" + connectSocket.getLocalAddress().getHostAddress() +
                                 ":" + serverPort + "] > " + containedEmails.toString());
+                    } else {
+                        System.out.println("Client with IP:" +
+                                connectSocket.getLocalAddress().getHostAddress() + " - Disconnected!");
+                        connected = false;
+
                     }
+
                     connectSocket.close();
 
                 }
@@ -77,12 +83,13 @@ public class ClientService extends Thread {
                 catch (IOException e){
                     System.out.println("Client with IP:" +
                             clientAddr.getHostAddress() + " - Disconnected!");
+                    System.out.println(e.getMessage());
                 }
 
 
 
 
-                // lukker socket forbindelsen
+                // lukker leser, skriver og socket forbindelsen
                 connectSocket.close();
 
         }
