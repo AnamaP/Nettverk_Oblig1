@@ -13,7 +13,7 @@ public class ClientTCP2 {
     public static void main(String[] args) throws IOException
     {
 
-        String hostName = "192.168.1.3"; // Default host, localhost
+        String hostName = "10.253.26.54"; // Default host, localhost
         int portNumber = 5555; // Default port to use
         if (args.length > 0)
         {

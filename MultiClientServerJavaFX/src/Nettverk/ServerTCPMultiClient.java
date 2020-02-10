@@ -49,8 +49,7 @@ public class ServerTCPMultiClient
                         clientserver.clientPort + " ");
 
             }
-        } catch (IOException e)
-        {
+        } catch (IOException e) {
 
             System.out.println("Exception occurred when trying to listen on port "
                     + portNumber + " or listening for a connection");
@@ -107,13 +106,14 @@ public class ServerTCPMultiClient
                     }
                     else{
                         //skriver emails til client
-                        out.println(errorMessage(0)+containedEmails.toString());
+                        out.println(containedEmails.toString());
                     }
 
 
                     System.out.println("I (Server) [" + connectSocket.getLocalAddress().getHostAddress() +
                             ":" + serverPort +"] > " + containedEmails.toString());
                 }
+
 
                 // close the connection socket
                 connectSocket.close();
