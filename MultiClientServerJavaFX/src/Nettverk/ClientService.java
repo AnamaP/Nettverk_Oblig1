@@ -66,7 +66,9 @@ public class ClientService extends Thread {
             }
 
 
-            // lukker socket forbindelsen
+            // lukker leser, skriver og socket forbindelsen
+            in.close();
+            out.close();
             connectSocket.close();
 
         }
