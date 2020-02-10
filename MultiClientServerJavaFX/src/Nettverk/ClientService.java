@@ -76,14 +76,12 @@ public class ClientService extends Thread {
 
                     }
 
-                    connectSocket.close();
 
                 }
             }
                 catch (IOException e){
                     System.out.println("Client with IP:" +
                             clientAddr.getHostAddress() + " - Disconnected!");
-                    System.out.println(e.getMessage());
                 }
 
 
