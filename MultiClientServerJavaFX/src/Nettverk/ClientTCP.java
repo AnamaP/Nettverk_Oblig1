@@ -10,27 +10,25 @@ import static Nettverk.HjelpeMetoder.messageDecoder;
 
 public class ClientTCP {
 
-    public static void main(String[] args) throws IOException
-    {
-
-      String hostName = "127.0.0.1"; // Default host, localhost
-      int portNumber = 5555; // Default port to use
-      if (args.length > 0)
-        {
-           hostName = args[0];
-           if (args.length > 1)
-           {
-             portNumber = Integer.parseInt(args[1]);
-             if (args.length > 2)
-             {
-               System.err.println("Usage: java TCP.EchoClientTCP [<host name>] [<port number>]");
-               System.exit(1);
-             }
-           }
-        }
+    public static void main(String[] args) throws IOException {
+        String hostName = "127.0.0.1";
+        int portNumber = 5555;
+          if (args.length > 0)
+            {
+               hostName = args[0];
+               if (args.length > 1)
+               {
+                 portNumber = Integer.parseInt(args[1]);
+                 if (args.length > 2)
+                 {
+                   System.err.println("Usage: java TCP.ClientTCP [<host name>] [<port number>]");
+                   System.exit(1);
+                 }
+               }
+            }
 
 
-        System.out.println("Hi, I am EchoUCase TCP client!");
+        System.out.println("Connected to TCP client!");
 
       InetAddress address = InetAddress.getByName(hostName);
 

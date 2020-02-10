@@ -15,17 +15,17 @@ public class HjelpeMetoder {
         String code = "";
         switch (errorCode) {
             case 0: {
-                emailExtractor(code); // kaller metoden som formaterer e-posten
+                emailExtractor(code); // kaller metoden som henter ut epost, som igjen kaller metoden som formaterer e-posten
                 break;
             }
 
             case 1: {
-                code += "!!No email address found on the page!!!,";
+                code += "!!No email address found on the page!!!";
                 break;
             }
 
             case 2: {
-                code+= "!!Server couldn’t find the web page!!!,";
+                code+= "!!Server couldn’t find the web page!!!";
                 break;
             }
         }
@@ -62,6 +62,7 @@ public class HjelpeMetoder {
 
     }
 
+    // metode som henter ut eposter vha. regEx, returnerer epost
     public static ArrayList<String> emailExtractor(String input) throws IOException {
 
         InputStream stream = inputStream(openConnection(urlReciever(input)));
@@ -81,7 +82,7 @@ public class HjelpeMetoder {
 
         ArrayList<String> containedEmails = new ArrayList<>();
 
-        // Regex for å fine email.
+        // Regex for å finne epost
         Pattern regex = Pattern.compile(
                 "([A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6})",
                 Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
@@ -89,7 +90,7 @@ public class HjelpeMetoder {
         //Sjekker om vi finner noen match.
         Matcher emailMatcher = regex.matcher(content);
 
-        //Legger emails inn i en liste, dersom de ikke er der fra før
+        //Legger epost inn i en liste, dersom de ikke er der fra før
         while(emailMatcher.find()){
             String enEmail = content.substring(emailMatcher.start(0),emailMatcher.end(0));
             if(!containedEmails.contains(enEmail)){
@@ -101,7 +102,7 @@ public class HjelpeMetoder {
 
     }
 
-    //Metode som formaterer måten emails skal bli printet ut på.
+    //Metode som formaterer måten epost skal bli skrevet ut på.
     public static String emailPrinter(String receivedText) throws IOException {
         String emails = "";
 

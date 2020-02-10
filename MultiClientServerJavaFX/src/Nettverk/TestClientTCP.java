@@ -5,16 +5,16 @@ import java.net.*;
 
 
 import static Nettverk.HjelpeMetoder.emailPrinter;
+import static Nettverk.HjelpeMetoder.messageDecoder;
 
 
-
-public class ClientTCP2 {
+public class TestClientTCP {
 
     public static void main(String[] args) throws IOException
     {
 
-        String hostName = "10.253.26.54"; // Default host, localhost
-        int portNumber = 5555; // Default port to use
+        String hostName = "127.0.0.1";
+        int portNumber = 5555;
         if (args.length > 0)
         {
             hostName = args[0];
@@ -23,14 +23,14 @@ public class ClientTCP2 {
                 portNumber = Integer.parseInt(args[1]);
                 if (args.length > 2)
                 {
-                    System.err.println("Usage: java TCP.EchoClientTCP [<host name>] [<port number>]");
+                    System.err.println("Usage: java TCP.TestClientTCP [<host name>] [<port number>]");
                     System.exit(1);
                 }
             }
         }
 
 
-        System.out.println("Hi, I am EchoUCase TCP client!");
+        System.out.println("Connected to test TCP client!");
 
         InetAddress address = InetAddress.getByName(hostName);
 
@@ -67,11 +67,19 @@ public class ClientTCP2 {
                 // read from the socket and display
                 String receivedText = in.readLine();
 
-                String outMessage = emailPrinter(receivedText);
+                if(receivedText != null) {
 
-                System.out.println("Server [" + hostName +  ":" + portNumber + "] > " + outMessage);
-                System.out.print("I (Client) [" + clientSocket.getLocalAddress().getHostAddress() + ":" +
-                        clientSocket.getLocalPort() + "] > ");
+                    String outMessage = emailPrinter(receivedText);
+
+                    System.out.println("Server [" + hostName + ":" + portNumber + "] > " + outMessage);
+                    System.out.print("I (Client) [" + clientSocket.getLocalAddress().getHostAddress() + ":" +
+                            clientSocket.getLocalPort() + "] > ");
+                }
+                else {
+                    System.out.println(messageDecoder(2));
+                    System.out.println("Restart your client");
+                    System.exit(1);
+                }
 
             }
         } catch (UnknownHostException e)
