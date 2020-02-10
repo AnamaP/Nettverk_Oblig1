@@ -44,8 +44,6 @@ public class ServerTCPMultiClient {
             }
         }
         System.out.println("Connecting Multi-client TCP server.");
-
-
         InetAddress inetAddress = InetAddress.getLocalHost(); // kobler opp til selve nettet så klient og server finner hverandre
         System.out.println("Server opened at: "+inetAddress.getHostAddress() + ": " + portNumber);
 
@@ -61,9 +59,6 @@ public class ServerTCPMultiClient {
             while (true)
             {
                 // Oppretter og starter en ny ClientServer tråd for hver tilkoblede klient
-                ServerTCPMultiClient test = new ServerTCPMultiClient();
-                test.start(portNumber);
-
                 ClientService clientserver = new ClientService(serverSocket.accept());
                 clientserver.start();
                 System.out.println("New Client connected: " + clientserver.clientAddr.getLocalHost()+ ":" +
