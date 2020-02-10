@@ -5,7 +5,7 @@ import java.net.*;
 
 
 import static Nettverk.HjelpeMetoder.emailPrinter;
-import static Nettverk.HjelpeMetoder.errorMessage;
+import static Nettverk.HjelpeMetoder.messageDecoder;
 
 
 public class ClientTCP {
@@ -76,7 +76,7 @@ public class ClientTCP {
                             clientSocket.getLocalPort() + "] > ");
                 }
                 else {
-                    System.out.println(errorMessage(2));
+                    System.out.println(messageDecoder(2));
                     System.out.println("Restart your client");
                     System.exit(1);
                 }

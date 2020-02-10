@@ -11,11 +11,11 @@ import java.util.regex.Pattern;
 
 public class HjelpeMetoder {
 
-    public static String errorMessage(int errorCode){
+    public static String messageDecoder(int errorCode)throws IOException{
         String code = "";
         switch (errorCode) {
             case 0: {
-                code += "Print the emails one per line ,";
+                emailExtractor(code); // kaller metoden som formaterer e-posten
                 break;
             }
 
@@ -102,7 +102,7 @@ public class HjelpeMetoder {
     }
 
     //Metode som formaterer måten emails skal bli printet ut på.
-    public static String emailPrinter(String receivedText){
+    public static String emailPrinter(String receivedText) throws IOException {
         String emails = "";
 
         if(receivedText != null) {
@@ -118,7 +118,7 @@ public class HjelpeMetoder {
             }
         }
         else {
-            emails += errorMessage(2);
+            emails += messageDecoder(2);
         }
         return emails;
     }

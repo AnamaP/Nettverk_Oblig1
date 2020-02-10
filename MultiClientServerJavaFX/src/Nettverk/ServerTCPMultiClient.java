@@ -102,7 +102,7 @@ public class ServerTCPMultiClient
 
                     if(containedEmails.isEmpty()){
                         //Fant ingen emails --> gi beskjed til klienten.
-                        out.println(errorMessage(1));
+                        out.println(messageDecoder(1));
                     }
                     else{
                         //skriver emails til client
