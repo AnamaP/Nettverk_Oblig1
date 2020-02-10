@@ -1,8 +1,4 @@
-package Nettverk; /**
- * Socket programming example: TCP Multi-client Server
- * DATA2410 Networking and Cloud Computing, Spring 2020
- * Raju Shrestha, OsloMet
- **/
+package Nettverk;
 import java.net.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -15,7 +11,7 @@ public class ServerTCPMultiClient
 {
     public static void main(String[] args) throws IOException
     {
-        int portNumber = 5555; // Default port to use
+        int portNumber = 5555;
 
         if (args.length > 0)
         {
@@ -32,17 +28,17 @@ public class ServerTCPMultiClient
         InetAddress inetAddress = InetAddress.getLocalHost();
         System.out.println("Server opened at: "+inetAddress.getHostAddress() + ": " + portNumber);
          try (
-                // Create server socket with the given port number
+                // Oppretter en server socket med det gitte port nummeret
                 ServerSocket serverSocket =
                         new ServerSocket(portNumber);
 
 
           )
         {
-            // continuously listening for clients
+            // Lytter kontinuerlig etter klienter
             while (true)
             {
-                // create and start a new ClientServer thread for each connected client
+                // Oppretter og starter en ny ClientServer tråd for hver tilkoblede klient
                 ClientService clientserver = new ClientService(serverSocket.accept());
                 clientserver.start();
                 System.out.println("New Client connected: " + clientserver.clientAddr.getLocalHost()+ ":" +

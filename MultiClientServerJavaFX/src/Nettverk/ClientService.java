@@ -12,7 +12,7 @@ import static Nettverk.HjelpeMetoder.*;
 import static Nettverk.HjelpeMetoder.messageDecoder;
 
 /***
- * This class serves a client in a separate thread
+ * Denne klassen tjener klienten i en separat tråd
  */
 public class ClientService extends Thread {
     Socket connectSocket;
@@ -30,16 +30,16 @@ public class ClientService extends Thread {
     public void run()
     {
         try (
-                // Create server socket with the given port number
+                // Oppretter server socket med det gitte port nummeret
                 PrintWriter out =
                         new PrintWriter(connectSocket.getOutputStream(), true);
-                // Stream reader from the connection socket
+                // Stream reader fra tilkobling socket
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(connectSocket.getInputStream()));
         ) {
 
             String receivedText;
-            // read from the connection socket
+            // leser fra tilkoblings socket
             while (((receivedText = in.readLine()) != null))
             {
                 //Åpner en kobling mellom server og webside
@@ -66,7 +66,7 @@ public class ClientService extends Thread {
             }
 
 
-            // close the connection socket
+            // lukker socket forbindelsen
             connectSocket.close();
 
         }
