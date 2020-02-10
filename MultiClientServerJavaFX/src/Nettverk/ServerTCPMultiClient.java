@@ -4,31 +4,7 @@ import java.io.*;
 
 
 public class ServerTCPMultiClient {
-    private ServerSocket serverSocket;
 
-    public void start(int port) {
-        try {
-            serverSocket = new ServerSocket(port);
-            while (true) {
-                new ClientService(serverSocket.accept()).start();
-
-
-            }
-        }catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            stop(); //kalles kun dersom en IOException forekommer
-        }
-    }
-
-    public void stop() {
-        try {
-            ServerSocket serverSocket = new ServerSocket();
-            serverSocket.close();
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     public static void main(String[] args) throws IOException
     {
         int portNumber = 5555;

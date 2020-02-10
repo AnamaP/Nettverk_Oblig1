@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
@@ -43,12 +44,12 @@ public class ClientService extends Thread {
             // leser fra tilkoblings socket
             boolean connected = true;
 
-            while (connected) {
+            try {
+                while (connected) {
 
-                try {
 
                     receivedText = in.readLine();
-                    if(receivedText != null) {
+                    if (receivedText != null) {
                         //Åpner en kobling mellom server og webside
                         openConnection(urlReciever(receivedText));
 
@@ -69,19 +70,19 @@ public class ClientService extends Thread {
                         System.out.println("I (Server) [" + connectSocket.getLocalAddress().getHostAddress() +
                                 ":" + serverPort + "] > " + containedEmails.toString());
                     }
-                    else {
-                        System.out.println("Client with IP:"  +connectSocket.getLocalAddress().getHostAddress()+ " - Disconnected!");
-                        connected = false;
-                    }
+                    connectSocket.close();
+
                 }
+            }
                 catch (IOException e){
-                    System.out.println("Blalbla");
+                    System.out.println("Client with IP:" +
+                            clientAddr.getHostAddress() + " - Disconnected!");
                 }
 
-                }
 
 
-                // lukker leser, skriver og socket forbindelsen
+
+                // lukker socket forbindelsen
                 connectSocket.close();
 
         }
@@ -90,6 +91,7 @@ public class ClientService extends Thread {
                     + clientAddr.getHostAddress());
             System.out.println(e.getMessage());
         }
+
     }
 
 }
