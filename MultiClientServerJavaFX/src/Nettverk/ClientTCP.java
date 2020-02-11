@@ -11,7 +11,10 @@ import static Nettverk.HjelpeMetoder.messageDecoder;
 public class ClientTCP {
 
     public static void main(String[] args) throws IOException {
+        //Klienten tar inn server sin IP for å koble seg til
         String hostName = "10.253.31.239";
+
+        //samme portnummer som serveren
         int portNumber = 5555;
           if (args.length > 0)
             {
@@ -30,43 +33,46 @@ public class ClientTCP {
 
         System.out.println("Connecting TCP client!");
 
-      InetAddress address = InetAddress.getByName(hostName);
+        //kobler seg til wifi
+        InetAddress address = InetAddress.getByName(hostName);
 
         try
         (
-            // create TCP socket for the given hostName, remote port PortNumber
+            // oppretter en TCP socket med gitt hostName og portNummer
             Socket clientSocket = new Socket(address, portNumber);
 
-            // Stream writer to the socket
+            //Stream som skriver til socket
             PrintWriter out =
                     new PrintWriter(clientSocket.getOutputStream(), true);
 
-            // Stream reader from the socket
+            // Stream reader fra socket
             BufferedReader in =
                     new BufferedReader(
                             new InputStreamReader(clientSocket.getInputStream()));
 
-            // Keyboard input reader
+            //Input leser fra konsollen
             BufferedReader stdIn =
                     new BufferedReader(
                             new InputStreamReader(System.in))
         )
         {
-            String userInput = "";
+            String userInput;
 
-            // Loop until null input string
+            // Kjører gjennom inntil userInput er null
             System.out.print("I (Client) [" + InetAddress.getLocalHost()  + ":" + clientSocket.getLocalPort() + "] > ");
 
 
             while ((userInput = stdIn.readLine()) != null && !userInput.isEmpty()) {
 
-
-                // write keyboard input to the socket
+                //Det som skrives i konsollen blir sendt til server.
                 out.println(userInput);
 
-                // read from the socket and display
+
+                //Leser fra socket og viser receivedText;
+                //ReceivedText er meldingen som kommer fra server.
                 String receivedText = in.readLine();
 
+                //Hvis receivedText ikke er null (at det er noe innhold)
                 if(receivedText != null) {
 
                     String outMessage = emailPrinter(receivedText);
@@ -75,14 +81,19 @@ public class ClientTCP {
                     System.out.print("I (Client) [" + clientSocket.getLocalAddress().getHostAddress() + ":" +
                             clientSocket.getLocalPort() + "] > ");
                 }
+                //Sender serveren null, vil disse feilmeldingene slå ut.
                 else {
                     System.out.println(messageDecoder(2));
                     System.out.println("Restart your client");
+
+                    //avslutter klienten
                     System.exit(1);
                 }
 
             }
-        } catch (UnknownHostException e)
+        }
+        //Dette skjer hvis den ikke klarer å koble opp
+        catch (UnknownHostException e)
         {
             System.err.println("Unknown host " + hostName);
             System.exit(1);

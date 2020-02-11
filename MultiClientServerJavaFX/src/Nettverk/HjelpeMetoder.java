@@ -3,7 +3,6 @@ package Nettverk;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.ServerSocket;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -12,6 +11,7 @@ import java.util.regex.Pattern;
 
 public class HjelpeMetoder {
 
+    // Skriver ut melding til klienten basert på respons fra server
     public static String messageDecoder(int errorCode)throws IOException{
         String code = "";
         switch (errorCode) {
@@ -35,7 +35,7 @@ public class HjelpeMetoder {
     }
 
     //Metode som tar inn input fra klienten og gjør den om til en URL.
-    public static URL urlReciever(String clientInput){
+    public static URL urlConverter(String clientInput){
        URL url = null;
 
         try {
@@ -57,16 +57,16 @@ public class HjelpeMetoder {
 
     //Tar informasjon som er hentet fra URL og gjør den om til en stream, slik at den kan leses av
     //emailExtractor.
-    public static InputStream inputStream (URLConnection con) throws IOException {
+    public static InputStream getInputStream(URLConnection con) throws IOException {
         InputStream stream = con.getInputStream();
         return stream;
 
     }
 
-    // metode som henter ut eposter vha. regEx, returnerer epost
+    // metode som henter ut eposter vha. regEx, returnerer en liste med e-post(er)
     public static ArrayList<String> emailExtractor(String input) throws IOException {
 
-        InputStream stream = inputStream(openConnection(urlReciever(input)));
+        InputStream stream = getInputStream(openConnection(urlConverter(input)));
 
         String content = "";
         int i;

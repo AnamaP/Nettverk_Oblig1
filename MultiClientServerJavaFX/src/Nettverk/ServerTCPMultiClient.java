@@ -19,7 +19,11 @@ public class ServerTCPMultiClient {
                 System.exit(1);
             }
         }
+
+        // Første meldingen som kommer opp
         System.out.println("Connecting Multi-client TCP server.");
+
+        //Denne printes ut etter at serveren er koblet opp til nettet
         InetAddress inetAddress = InetAddress.getLocalHost(); // kobler opp til selve nettet så klient og server finner hverandre
         System.out.println("Server opened at: "+inetAddress.getHostAddress() + ": " + portNumber);
 

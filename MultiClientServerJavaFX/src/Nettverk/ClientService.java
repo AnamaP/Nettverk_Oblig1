@@ -6,8 +6,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.SocketException;
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 import static Nettverk.HjelpeMetoder.*;
@@ -42,21 +40,29 @@ public class ClientService extends Thread {
 
             String receivedText;
             // leser fra tilkoblings socket
+
+
             boolean connected = true;
 
             try {
+
+                //Mens klient er koblet opp
                 while (connected) {
 
 
+                    //Melding som klient skriver (FRA KEYBOARD)
                     receivedText = in.readLine();
+
                     if (receivedText != null) {
+
                         //Åpner en kobling mellom server og webside
-                        openConnection(urlReciever(receivedText));
+                        openConnection(urlConverter(receivedText));
 
                         System.out.println("Client [" + clientAddr.getHostAddress() + ":" + clientPort + "] > " + receivedText);
 
                         // Oppretter en ArrayListe som tar i mot alle emails og bruker hjelpemetoden for å legge de inn
                         ArrayList<String> containedEmails = emailExtractor(receivedText);
+
 
 
                         if (containedEmails.isEmpty()) {
@@ -69,7 +75,10 @@ public class ClientService extends Thread {
 
                         System.out.println("I (Server) [" + connectSocket.getLocalAddress().getHostAddress() +
                                 ":" + serverPort + "] > " + containedEmails.toString());
-                    } else {
+                    }
+
+                    //Hvis klienten på eget initiativ avslutter programmet.
+                    else {
                         System.out.println("Client with IP:" +
                                 connectSocket.getLocalAddress().getHostAddress() + " - Disconnected!");
                         connected = false;
@@ -84,10 +93,7 @@ public class ClientService extends Thread {
                             clientAddr.getHostAddress() + " - Disconnected!");
                 }
 
-
-
-
-                // lukker leser, skriver og socket forbindelsen
+                // lukker socket forbindelsen
                 connectSocket.close();
 
         }
